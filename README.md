@@ -5,7 +5,7 @@ UML
 ![Alt text](uml/Use%20Case%20Diagram%20RentBike.jpg)
 
 ## 2. Flowchart
-![Alt text](uml/Flowchart%20RentBike.jpg)
+![Alt text](uml/Flowchart%20RentBike%20Rev.jpg)
 
 A new Flutter project.
 
