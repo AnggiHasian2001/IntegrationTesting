@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:rentbike/controller/auth_controller.dart';
+import 'package:rentbike/model/user_model.dart';
 import 'package:rentbike/view/login.dart';
-import '../model/user_model.dart';
 
 class Register extends StatelessWidget {
   final formkey = GlobalKey<FormState>();
