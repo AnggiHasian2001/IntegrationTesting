@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../model/user_model.dart';
+import 'package:rentbike/model/user_model.dart';
 
 class AuthController {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -62,9 +62,5 @@ class AuthController {
       return UserModel.fromFirebaseUser(user);
     }
     return null;
-  }
-
-  Future<void> signOut() async {
-    await auth.signOut();
   }
 }
