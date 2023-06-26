@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:rentbike/controller/auth_controller.dart';
 import 'package:rentbike/model/user_model.dart';
+import 'package:rentbike/view/homepage.dart';
 import 'package:rentbike/view/login.dart';
 
 class Register extends StatelessWidget {
@@ -16,148 +17,202 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Register"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Form(
-          key: formkey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please type an name';
-                  }
-                },
-                decoration: InputDecoration(hintText: "Name"),
-                onChanged: (value) {
-                  name = value;
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please type an email';
-                  }
-                },
-                decoration: InputDecoration(hintText: "Email"),
-                onChanged: (value) {
-                  email = value;
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.length < 6) {
-                    return 'Your password needs to be at least 6 characters';
-                  }
-                },
-                decoration: InputDecoration(hintText: "Password"),
-                onChanged: (value) {
-                  password = value;
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                child: Text('Register'),
-                onPressed: () async {
-                  if (formkey.currentState!.validate()) {
-                    UserModel? registeredUser = await autCtr
-                        .registerWithEmailAndPassword(email!, password!, name!);
-
-                    if (registeredUser != null) {
-                      // Registration successful
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Registration Successful'),
-                            content: const Text(
-                                'You have been successfully registered.'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Login()));
-                                  print(registeredUser.name);
-                                  // Navigate to the next screen or perform any desired action
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } else {
-                      // Registration failed
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Registration Failed'),
-                            content: const Text(
-                                'An error occurred during registration.'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Register()));
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  }
-                },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
+        body: SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Form(
+            key: formkey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Register',
+                  style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber),
+                ),
+                Container(
+                  padding: EdgeInsets.all(30),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://media.istockphoto.com/id/1152337760/id/vektor/logo-untuk-penyewaan-sepeda-ilustrasi-vektor-pada-latar-belakang-putih.jpg?s=2048x2048&w=is&k=20&c=QiMj2hoiSSEpmESU2_weiEpMP4G4o-xkGMnuOPpoFTc="),
+                    backgroundColor: Colors.black,
+                    radius: 90,
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Harap masukan nama';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Name",
+                    labelText: "Name",
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
+                  ),
+                  onChanged: (value) {
+                    name = value;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Harap masukan email';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    labelText: "Email",
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
+                  ),
+                  onChanged: (value) {
+                    email = value;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.length < 6) {
+                      return 'Password butuh setidaknya panjang 6 data';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Password",
+                    labelText: "Password",
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
+                  ),
+                  onChanged: (value) {
+                    password = value;
+                  },
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                InkWell(
+                  onTap: () async {
+                    if (formkey.currentState!.validate()) {
+                      UserModel? registeredUser =
+                          await autCtr.registerWithEmailAndPassword(
+                              email!, password!, name!);
+
+                      if (registeredUser != null) {
+                        // Registration successful
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Registrasi Berhasil'),
+                              content:
+                                  const Text('Kamu telah berhasil registrasi'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Login()));
+                                    print(registeredUser.name);
+                                    // Navigate to the next screen or perform any desired action
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        // Registration failed
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Registrasi Gagal'),
+                              content: const Text(
+                                  'Terdapat error ketika registrasi'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Register()));
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }
+                  },
+                  child: Container(
+                    width: 500,
+                    height: 50,
+                    decoration: BoxDecoration(
                         color: Colors.amber,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                        borderRadius: BorderRadius.circular(50)),
+                    child: Center(
+                      child: Text(
+                        'Registrasi',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already Have an Account?",
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                      },
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                          color: Colors.amber,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    );
+    ));
   }
 }
