@@ -27,6 +27,11 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Harap masukan Email';
+                    }
+                  },
                   decoration: InputDecoration(hintText: "Email"),
                   onChanged: (value) {
                     email = value;
@@ -36,6 +41,11 @@ class Login extends StatelessWidget {
                   height: 20,
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value == null || value.length < 6) {
+                      return 'Harap masukan password setidaknya 6 karakter';
+                    }
+                  },
                   decoration: InputDecoration(hintText: "Password"),
                   onChanged: (value) {
                     password = value;
@@ -81,9 +91,9 @@ class Login extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Login Failed'),
+                              title: const Text('Login Gagal'),
                               content:
-                                  const Text('An error occurred during login.'),
+                                  const Text('Terdapat error saat registrasi'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
