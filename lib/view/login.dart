@@ -45,6 +45,8 @@ class _LoginState extends State<Login> {
                     Container(
                       padding: EdgeInsets.all(30),
                       child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            "https://media.istockphoto.com/id/1152337760/id/vektor/logo-untuk-penyewaan-sepeda-ilustrasi-vektor-pada-latar-belakang-putih.jpg?s=2048x2048&w=is&k=20&c=QiMj2hoiSSEpmESU2_weiEpMP4G4o-xkGMnuOPpoFTc="),
                         backgroundColor: Colors.black,
                         radius: 90,
                       ),
