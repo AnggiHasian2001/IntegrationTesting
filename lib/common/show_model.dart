@@ -41,6 +41,12 @@ class AddNewRentModel extends StatelessWidget {
           ),
           const Gap(6),
           TextFieldWidget(maxLine: 1, hintText: 'Masukkan Nama Penyewa'),
+          const Gap(12),
+          const Text('Deskripsi', style: AppStyle.headingOne),
+          const Gap(6),
+          const TextFieldWidget(maxLine: 5, hintText: 'Masukkan Deskripsi'),
+          const Gap(12),
+          const Text('Kategori', style: AppStyle.headingOne),
         ],
       ),
     );
