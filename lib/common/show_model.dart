@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:rentbike/constants/app_style.dart';
+import 'package:rentbike/widget/date_time_widget.dart';
 import 'package:rentbike/widget/radio_widget.dart';
 import 'package:rentbike/widget/textfield_widget.dart';
 
@@ -13,7 +15,7 @@ class AddNewRentModel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(30),
-      height: MediaQuery.of(context).size.height * 0.70,
+      height: MediaQuery.of(context).size.height * 0.90,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -69,7 +71,25 @@ class AddNewRentModel extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+          const Gap(12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              DateTimeWidget(
+                  titleText: 'Tanggal',
+                  valueText: 'dd/mm/yy',
+                  iconSection: CupertinoIcons.calendar),
+              Gap(12),
+              DateTimeWidget(
+                titleText: 'Time',
+                valueText: 'hh : mm',
+                iconSection: CupertinoIcons.clock,
+              ),
+            ],
+          ),
+
+          // Button Section
         ],
       ),
     );
