@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:gap/gap.dart';
+import 'package:rentbike/common/show_model.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -82,13 +83,7 @@ class HomePage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   context: context,
-                  builder: (context) => Container(
-                    height: MediaQuery.of(context).size.height * 0.80,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
+                  builder: (context) => const AddNewRentModel(),
                 ),
                 child: Text('+ Tambah Data'),
               ),
