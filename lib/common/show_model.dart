@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:rentbike/constants/app_style.dart';
+import 'package:rentbike/widget/radio_widget.dart';
 import 'package:rentbike/widget/textfield_widget.dart';
 
 class AddNewRentModel extends StatelessWidget {
@@ -47,6 +48,28 @@ class AddNewRentModel extends StatelessWidget {
           const TextFieldWidget(maxLine: 5, hintText: 'Masukkan Deskripsi'),
           const Gap(12),
           const Text('Kategori', style: AppStyle.headingOne),
+          Row(
+            children: [
+              const Expanded(
+                child: RadioWidget(
+                  categColor: Colors.green,
+                  titleRadio: 'Pinjam',
+                ),
+              ),
+              Expanded(
+                child: RadioWidget(
+                  categColor: Colors.blue.shade700,
+                  titleRadio: 'Keliling',
+                ),
+              ),
+              Expanded(
+                child: RadioWidget(
+                  categColor: Colors.amberAccent.shade700,
+                  titleRadio: 'Foto',
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
