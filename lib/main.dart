@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rentbike/view/homepage.dart';
 import 'package:rentbike/view/login.dart';
 import 'package:rentbike/view/register.dart';
@@ -16,9 +17,13 @@ class MyApp extends StatelessWidget {
   //this widget
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
+    return ProviderScope(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'RentBike',
+        theme: ThemeData(),
+        home: HomePage(),
+      ),
     );
   }
 }

@@ -1,18 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:rentbike/constants/app_style.dart';
+import 'package:rentbike/provider/radio_provider.dart';
 import 'package:rentbike/widget/date_time_widget.dart';
 import 'package:rentbike/widget/radio_widget.dart';
 import 'package:rentbike/widget/textfield_widget.dart';
 
-class AddNewRentModel extends StatelessWidget {
+class AddNewRentModel extends ConsumerWidget {
   const AddNewRentModel({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.all(30),
       height: MediaQuery.of(context).size.height * 0.90,
@@ -52,22 +54,31 @@ class AddNewRentModel extends StatelessWidget {
           const Text('Kategori', style: AppStyle.headingOne),
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: RadioWidget(
                   categColor: Colors.green,
                   titleRadio: 'Pinjam',
+                  valueInput: 1,
+                  onChangeValue: () =>
+                      ref.read(radioProvider.notifier).update((state) => 1),
                 ),
               ),
               Expanded(
                 child: RadioWidget(
                   categColor: Colors.blue.shade700,
                   titleRadio: 'Keliling',
+                  valueInput: 2,
+                  onChangeValue: () =>
+                      ref.read(radioProvider.notifier).update((state) => 2),
                 ),
               ),
               Expanded(
                 child: RadioWidget(
                   categColor: Colors.amberAccent.shade700,
                   titleRadio: 'Foto',
+                  valueInput: 3,
+                  onChangeValue: () =>
+                      ref.read(radioProvider.notifier).update((state) => 3),
                 ),
               ),
             ],
