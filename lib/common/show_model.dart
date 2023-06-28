@@ -113,10 +113,20 @@ class AddNewRentModel extends ConsumerWidget {
               const Gap(12),
               DateTimeWidget(
                 titleText: 'Time',
-                valueText: 'hh : mm',
+                valueText: ref.watch(timeProvider),
                 iconSection: CupertinoIcons.clock,
-                onTap: () => showTimePicker(
-                    context: context, initialTime: TimeOfDay.now()),
+                onTap: () async {
+                  final getTime = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                  );
+
+                  if (getTime != null) {
+                    ref
+                        .read(timeProvider.notifier)
+                        .update((state) => getTime.format(context));
+                  }
+                },
               ),
             ],
           ),
