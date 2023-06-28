@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:rentbike/constants/app_style.dart';
+import 'package:rentbike/provider/date_time_provider.dart';
 import 'package:rentbike/provider/radio_provider.dart';
 import 'package:rentbike/widget/date_time_widget.dart';
 import 'package:rentbike/widget/radio_widget.dart';
@@ -15,6 +17,7 @@ class AddNewRentModel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dateProv = ref.watch(dateProvider);
     return Container(
       padding: const EdgeInsets.all(30),
       height: MediaQuery.of(context).size.height * 0.90,
@@ -88,14 +91,32 @@ class AddNewRentModel extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DateTimeWidget(
-                  titleText: 'Tanggal',
-                  valueText: 'dd/mm/yy',
-                  iconSection: CupertinoIcons.calendar),
-              Gap(12),
+                titleText: 'Tanggal',
+                valueText: dateProv,
+                iconSection: CupertinoIcons.calendar,
+                onTap: () async {
+                  final getValue = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2021),
+                      lastDate: DateTime(2025));
+
+                  if (getValue != null) {
+                    final format = DateFormat.yMd();
+                    ref
+                        .read(dateProvider.notifier)
+                        .update((state) => format.format(getValue));
+                    print(format.format(getValue));
+                  }
+                },
+              ),
+              const Gap(12),
               DateTimeWidget(
                 titleText: 'Time',
                 valueText: 'hh : mm',
                 iconSection: CupertinoIcons.clock,
+                onTap: () => showTimePicker(
+                    context: context, initialTime: TimeOfDay.now()),
               ),
             ],
           ),
