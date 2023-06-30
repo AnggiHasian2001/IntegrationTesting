@@ -8,7 +8,7 @@ import 'package:rentbike/common/show_model.dart';
 import '../widget/card_todo_widget.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
                   context: context,
-                  builder: (context) => const AddNewRentModel(),
+                  builder: (context) => AddNewRentModel(),
                 ),
                 child: Text('+ Tambah Data'),
               ),

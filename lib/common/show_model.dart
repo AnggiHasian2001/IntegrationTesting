@@ -11,9 +11,14 @@ import 'package:rentbike/widget/radio_widget.dart';
 import 'package:rentbike/widget/textfield_widget.dart';
 
 class AddNewRentModel extends ConsumerWidget {
-  const AddNewRentModel({
+  AddNewRentModel({
     super.key,
   });
+
+  //nama penyewa
+  final nameController = TextEditingController();
+  //deksripsi
+  final descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,11 +53,19 @@ class AddNewRentModel extends ConsumerWidget {
             style: AppStyle.headingOne,
           ),
           const Gap(6),
-          TextFieldWidget(maxLine: 1, hintText: 'Masukkan Nama Penyewa'),
+          TextFieldWidget(
+            maxLine: 1,
+            hintText: 'Masukkan Nama Penyewa',
+            txtController: nameController,
+          ),
           const Gap(12),
           const Text('Deskripsi', style: AppStyle.headingOne),
           const Gap(6),
-          const TextFieldWidget(maxLine: 5, hintText: 'Masukkan Deskripsi'),
+          TextFieldWidget(
+            maxLine: 5,
+            hintText: 'Masukkan Deskripsi',
+            txtController: descriptionController,
+          ),
           const Gap(12),
           const Text('Kategori', style: AppStyle.headingOne),
           Row(
