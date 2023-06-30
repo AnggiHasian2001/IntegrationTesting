@@ -197,11 +197,13 @@ class AddNewRentModel extends ConsumerWidget {
                     }
 
                     ref.read(serviceProvider).addNewRent(RentModel(
-                        nameRent: nameController.text,
-                        description: descriptionController.text,
-                        category: category,
-                        dateRent: ref.read(dateProvider),
-                        timeRent: ref.read(timeProvider)));
+                          nameRent: nameController.text,
+                          description: descriptionController.text,
+                          category: category,
+                          dateRent: ref.read(dateProvider),
+                          timeRent: ref.read(timeProvider),
+                          isDone: false,
+                        ));
 
                     print('Data berhasil disimpan');
 

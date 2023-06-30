@@ -2,16 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:rentbike/common/show_model.dart';
+import 'package:rentbike/provider/service_provider.dart';
 
 import '../widget/card_todo_widget.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends ConsumerWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rentData = ref.watch(fetchDataProvider);
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -59,7 +62,7 @@ class HomePage extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
                     'PT Rental Sepeda Abadi',
                     style: TextStyle(
@@ -87,16 +90,18 @@ class HomePage extends StatelessWidget {
                   context: context,
                   builder: (context) => AddNewRentModel(),
                 ),
-                child: Text('+ Tambah Data'),
+                child: const Text(
+                  '+ Tambah Data',
+                ),
               ),
             ],
           ),
           const Gap(20),
           ListView.builder(
-            itemCount: 1,
+            itemCount: rentData.value?.length ?? 0,
             shrinkWrap: true,
-            itemBuilder: (context, index) => const CardListWidget(),
-          )
+            itemBuilder: (context, index) => CardListWidget(getIndex: index),
+          ),
         ]),
       )),
     );
