@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:rentbike/constants/app_style.dart';
+import 'package:rentbike/model/rent_model.dart';
 import 'package:rentbike/provider/date_time_provider.dart';
 import 'package:rentbike/provider/radio_provider.dart';
+import 'package:rentbike/provider/service_provider.dart';
 import 'package:rentbike/widget/date_time_widget.dart';
 import 'package:rentbike/widget/radio_widget.dart';
 import 'package:rentbike/widget/textfield_widget.dart';
@@ -178,7 +180,36 @@ class AddNewRentModel extends ConsumerWidget {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    final getRadioValue = ref.read(radioProvider);
+                    String category = '';
+
+                    switch (getRadioValue) {
+                      case 1:
+                        category = 'Pinjam';
+                        break;
+                      case 2:
+                        category = 'Keliling';
+                        break;
+                      case 3:
+                        category = 'Foto';
+                        break;
+                    }
+
+                    ref.read(serviceProvider).addNewRent(RentModel(
+                        nameRent: nameController.text,
+                        description: descriptionController.text,
+                        category: category,
+                        dateRent: ref.read(dateProvider),
+                        timeRent: ref.read(timeProvider)));
+
+                    print('Data berhasil disimpan');
+
+                    nameController.clear();
+                    descriptionController.clear();
+                    ref.read(radioProvider.notifier).update((state) => 0);
+                    Navigator.pop(context);
+                  },
                   child: const Text('Save'),
                 ),
               ),

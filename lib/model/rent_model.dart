@@ -19,8 +19,7 @@ class RentModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'docID': docID,
+    return <String, dynamic>{
       'nameRent': nameRent,
       'description': description,
       'category': category,
