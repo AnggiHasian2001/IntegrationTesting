@@ -29,6 +29,13 @@
             {
               "client_id": "460056647131-90ml086k3aoo3jmmmdjemln58jlpaa4l.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "460056647131-cnv8idusuf4rv9krb6abkr5nfmpir6ii.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rentbike"
+              }
             }
           ]
         }

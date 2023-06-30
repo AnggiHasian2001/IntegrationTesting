@@ -5,6 +5,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:gap/gap.dart';
 import 'package:rentbike/common/show_model.dart';
 
+import '../widget/card_todo_widget.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -88,6 +90,12 @@ class HomePage extends StatelessWidget {
                 child: Text('+ Tambah Data'),
               ),
             ],
+          ),
+          const Gap(20),
+          ListView.builder(
+            itemCount: 1,
+            shrinkWrap: true,
+            itemBuilder: (context, index) => const CardListWidget(),
           )
         ]),
       )),
