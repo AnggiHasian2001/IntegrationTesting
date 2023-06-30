@@ -8,4 +8,11 @@ class RentService {
   void addNewRent(RentModel model) {
     rentCollection.add(model.toMap());
   }
+
+  //UPDATE
+  void updateRent(String? docID, bool? valueUpdate) {
+    rentCollection.doc(docID).update({
+      'isDone': valueUpdate,
+    });
+  }
 }

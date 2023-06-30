@@ -62,15 +62,33 @@ class CardListWidget extends ConsumerWidget {
                   children: [
                     ListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: Text(rentData[getIndex].nameRent),
-                      subtitle: Text(rentData[getIndex].description),
+                      title: Text(
+                        //menerima data dan dekorasi coret data
+                        rentData[getIndex].nameRent,
+                        maxLines: 1,
+                        style: TextStyle(
+                            decoration: rentData[getIndex].isDone
+                                ? TextDecoration.lineThrough
+                                : null),
+                      ),
+                      subtitle: Text(
+                        //menerima data dan dekorasi coret data
+                        rentData[getIndex].description,
+                        maxLines: 1,
+                        style: TextStyle(
+                            decoration: rentData[getIndex].isDone
+                                ? TextDecoration.lineThrough
+                                : null),
+                      ),
                       trailing: Transform.scale(
                         scale: 1.5,
                         child: Checkbox(
                           activeColor: Colors.blue.shade800,
                           shape: const CircleBorder(),
                           value: rentData[getIndex].isDone,
-                          onChanged: (value) => print(value),
+                          onChanged: (value) => ref
+                              .read(serviceProvider)
+                              .updateRent(rentData[getIndex].docID, value),
                         ),
                       ),
                     ),
