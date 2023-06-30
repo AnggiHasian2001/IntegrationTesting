@@ -15,4 +15,9 @@ class RentService {
       'isDone': valueUpdate,
     });
   }
+
+  //DELETE
+  void deleteRent(String? docID) {
+    rentCollection.doc(docID).delete();
+  }
 }

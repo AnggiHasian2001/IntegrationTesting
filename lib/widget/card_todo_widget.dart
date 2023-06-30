@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -62,6 +63,14 @@ class CardListWidget extends ConsumerWidget {
                   children: [
                     ListTile(
                       contentPadding: EdgeInsets.zero,
+                      //fungsi delete
+                      leading: IconButton(
+                        icon: Icon(CupertinoIcons.delete),
+                        onPressed: () => ref
+                            .read(serviceProvider)
+                            .deleteRent(rentData[getIndex].docID),
+                      ),
+                      //text nama penyewa
                       title: Text(
                         //menerima data dan dekorasi coret data
                         rentData[getIndex].nameRent,
@@ -71,6 +80,8 @@ class CardListWidget extends ConsumerWidget {
                                 ? TextDecoration.lineThrough
                                 : null),
                       ),
+
+                      //text deksripsi
                       subtitle: Text(
                         //menerima data dan dekorasi coret data
                         rentData[getIndex].description,
