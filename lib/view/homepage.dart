@@ -5,12 +5,18 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:rentbike/common/show_model.dart';
+import 'package:rentbike/controller/auth_controller.dart';
 import 'package:rentbike/provider/service_provider.dart';
+import 'package:rentbike/view/login.dart';
+import 'package:rentbike/view/sepeda/bikehome.dart';
 
-import '../widget/card_todo_widget.dart';
+import '../widget/card_list_widget.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+
+  var cc = AuthController();
+  final autCtr = AuthController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +35,7 @@ class HomePage extends ConsumerWidget {
           ),
           title: Text(
             'Admin',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade400),
+            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
           ),
           subtitle: Text(
             'Zahran Rafif',
@@ -41,12 +47,19 @@ class HomePage extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(children: [
               IconButton(
-                onPressed: () {},
-                icon: const Icon(CupertinoIcons.calendar),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BikeHome()));
+                },
+                icon: const Icon(CupertinoIcons.car),
               ),
               IconButton(
-                onPressed: () {},
-                icon: const Icon(CupertinoIcons.bell),
+                onPressed: () async {
+                  await autCtr.signOut();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Login()));
+                },
+                icon: const Icon(CupertinoIcons.arrow_uturn_right),
               ),
             ]),
           )
@@ -54,33 +67,37 @@ class HomePage extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        //ukuran padding lebar
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(children: [
           const Gap(20),
           Row(
+            //biar jarak antara kiri dan kanan
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    'PT Rental Sepeda Abadi',
+                    'PT Rental Sepeda UMY',
                     style: TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
+                  Gap(7),
                   Text(
                     'Selasa, 27 Juni 2023',
-                    style: TextStyle(fontSize: 14, color: Colors.black),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                 ],
               ),
+              //Button tambah data
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFD5E8FA),
                     foregroundColor: Colors.blue.shade800,
-                    elevation: 0,
+                    elevation: 1,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8))),
                 onPressed: () => showModalBottomSheet(
@@ -99,8 +116,10 @@ class HomePage extends ConsumerWidget {
           ),
           const Gap(20),
           ListView.builder(
+            //menghitung banyaknya data yg akan ditampilkan
             itemCount: rentData.value?.length ?? 0,
             shrinkWrap: true,
+            //mengambil card dari widget CardListWidget
             itemBuilder: (context, index) => CardListWidget(getIndex: index),
           ),
         ]),

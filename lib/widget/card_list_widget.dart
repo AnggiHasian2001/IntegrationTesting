@@ -36,9 +36,9 @@ class CardListWidget extends ConsumerWidget {
             break;
         }
         return Container(
-          margin: const EdgeInsets.symmetric(vertical: 4),
+          margin: const EdgeInsets.symmetric(vertical: 5),
           width: double.infinity,
-          height: 120,
+          height: 135,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
@@ -78,19 +78,24 @@ class CardListWidget extends ConsumerWidget {
                         style: TextStyle(
                             decoration: rentData[getIndex].isDone
                                 ? TextDecoration.lineThrough
-                                : null),
+                                : null,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17),
                       ),
 
                       //text deksripsi
                       subtitle: Text(
                         //menerima data dan dekorasi coret data
                         rentData[getIndex].description,
-                        maxLines: 1,
+                        maxLines: 3,
                         style: TextStyle(
                             decoration: rentData[getIndex].isDone
                                 ? TextDecoration.lineThrough
-                                : null),
+                                : null,
+                            fontWeight: FontWeight.w500),
                       ),
+
+                      //button check
                       trailing: Transform.scale(
                         scale: 1.5,
                         child: Checkbox(
@@ -104,19 +109,38 @@ class CardListWidget extends ConsumerWidget {
                       ),
                     ),
                     Transform.translate(
-                      offset: const Offset(0, -12),
+                      offset: const Offset(0, 20),
                       child: Container(
                         child: Column(
                           children: [
                             Divider(
-                              thickness: 1.5,
+                              thickness: 1.2,
                               color: Colors.grey.shade200,
                             ),
+                            Gap(5),
                             Row(
                               children: [
-                                const Text('Today'),
+                                const Text('Today :'),
                                 const Gap(12),
-                                Text(rentData[getIndex].timeRent)
+                                Text(rentData[getIndex].timeRent,
+                                    style: TextStyle(
+                                        decoration: rentData[getIndex].isDone
+                                            ? TextDecoration.lineThrough
+                                            : null,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 14,
+                                        color: Colors.amber)),
+                                const Gap(20),
+                                const Text('Kategori :'),
+                                const Gap(12),
+                                Text(rentData[getIndex].category,
+                                    style: TextStyle(
+                                        decoration: rentData[getIndex].isDone
+                                            ? TextDecoration.lineThrough
+                                            : null,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 14,
+                                        color: Colors.green)),
                               ],
                             )
                           ],

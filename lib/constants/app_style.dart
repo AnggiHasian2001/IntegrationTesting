@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//style huruf
 class AppStyle {
   static const headingOne = TextStyle(
     fontSize: 16,

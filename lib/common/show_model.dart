@@ -105,6 +105,7 @@ class AddNewRentModel extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              //untuk menampilkan tampilan tanggal
               DateTimeWidget(
                 titleText: 'Tanggal',
                 valueText: dateProv,
@@ -126,8 +127,9 @@ class AddNewRentModel extends ConsumerWidget {
                 },
               ),
               const Gap(12),
+              //untuk menampilkan tampilan jam
               DateTimeWidget(
-                titleText: 'Time',
+                titleText: 'Jam',
                 valueText: ref.watch(timeProvider),
                 iconSection: CupertinoIcons.clock,
                 onTap: () async {
@@ -146,8 +148,8 @@ class AddNewRentModel extends ConsumerWidget {
             ],
           ),
 
-          // Button Section
-          const Gap(12),
+          // Button Section Cancel dan Save
+          const Gap(20),
           Row(
             children: [
               Expanded(
@@ -180,6 +182,7 @@ class AddNewRentModel extends ConsumerWidget {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
+                  //inisiasi radio button pada button save
                   onPressed: () {
                     final getRadioValue = ref.read(radioProvider);
                     String category = '';
