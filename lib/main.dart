@@ -5,6 +5,7 @@ import 'package:rentbike/firebase_options.dart';
 import 'package:rentbike/view/homepage.dart';
 import 'package:rentbike/view/login.dart';
 import 'package:rentbike/view/register.dart';
+import 'package:rentbike/view/sepeda/add_sepeda.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'RentBike',
         theme: ThemeData(),
-        home: HomePage(),
+        home: AddSepeda(),
       ),
     );
   }
