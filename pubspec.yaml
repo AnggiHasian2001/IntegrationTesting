@@ -41,6 +41,8 @@ dependencies:
   gap: ^3.0.1
   flutter_riverpod: ^2.3.6
   intl: ^0.18.1
+  image_picker: ^1.0.0
+  firebase_storage: ^11.2.4
 
 
 dev_dependencies:

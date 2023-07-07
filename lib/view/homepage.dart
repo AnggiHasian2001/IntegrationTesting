@@ -10,7 +10,7 @@ import 'package:rentbike/provider/service_provider.dart';
 import 'package:rentbike/view/login.dart';
 import 'package:rentbike/view/sepeda/bikehome.dart';
 
-import '../widget/card_list_widget.dart';
+import 'card_list_widget.dart';
 
 class HomePage extends ConsumerWidget {
   HomePage({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class HomePage extends ConsumerWidget {
             'Admin',
             style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
           ),
-          subtitle: Text(
+          subtitle: const Text(
             'Zahran Rafif',
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
@@ -95,7 +95,7 @@ class HomePage extends ConsumerWidget {
               //Button tambah data
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFD5E8FA),
+                    backgroundColor: const Color(0xFFD5E8FA),
                     foregroundColor: Colors.blue.shade800,
                     elevation: 1,
                     shape: RoundedRectangleBorder(
@@ -114,6 +114,7 @@ class HomePage extends ConsumerWidget {
               ),
             ],
           ),
+          //List View Data
           const Gap(20),
           ListView.builder(
             //menghitung banyaknya data yg akan ditampilkan

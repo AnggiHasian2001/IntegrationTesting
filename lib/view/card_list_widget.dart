@@ -14,6 +14,7 @@ class CardListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //ngambil dari service_provider
     //buat ngambil data ke card
     final rentData = ref.watch(fetchDataProvider);
     return rentData.when(
