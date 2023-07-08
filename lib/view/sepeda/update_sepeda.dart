@@ -1,26 +1,78 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'package:rentbike/model/sepeda_model.dart';
 import 'package:rentbike/view/sepeda/bikehome.dart';
 
-class UpdateSepeda extends StatelessWidget {
+class UpdateSepeda extends StatefulWidget {
+  final Sepeda sepeda;
+  UpdateSepeda({super.key, required this.sepeda});
+
+  @override
+  State<UpdateSepeda> createState() => _UpdateSepedaState();
+}
+
+class _UpdateSepedaState extends State<UpdateSepeda> {
   //variabel
   final TextEditingController nomorController = TextEditingController();
 
   final TextEditingController nameController = TextEditingController();
 
-  final Sepeda sepeda;
+  //start untuk input gambar
+  File? imageFile;
 
-  UpdateSepeda({super.key, required this.sepeda});
+  Future getImage() async {
+    final picker = ImagePicker();
+    final PickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (PickedFile != null) {
+      setState(() {
+        imageFile = File(PickedFile.path);
+      });
+    }
+  }
+
+  Future<String> uploadImageToFirebase() async {
+    String imageUrl;
+    if (imageFile != null) {
+      try {
+        firebase_storage.Reference ref = firebase_storage
+            .FirebaseStorage.instance
+            .ref()
+            .child('images/${DateTime.now().millisecondsSinceEpoch}');
+        await ref.putFile(imageFile!);
+        imageUrl = await ref.getDownloadURL();
+        return imageUrl;
+        // Gunakan URL gambar untuk keperluan selanjutnya, seperti menyimpan ke database
+      } catch (e) {
+        print('Error uploading image to Firebase Storage: $e');
+      }
+    } else {
+      print('No image selected.');
+    }
+    return '';
+  }
+
+  Future uploadImage() async {
+    String url;
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('images/${DateTime.now().millisecondsSinceEpoch}');
+    await ref.putFile(imageFile!);
+    url = await ref.getDownloadURL();
+    return url;
+  }
 
   @override
   Widget build(BuildContext context) {
-    nomorController.text = '${sepeda.nomor}';
-    nameController.text = sepeda.name;
+    nomorController.text = '${widget.sepeda.nomor}';
+    nameController.text = widget.sepeda.name;
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -47,6 +99,30 @@ class UpdateSepeda extends StatelessWidget {
           child: Column(
         children: [
           const SizedBox(height: 20),
+          const Text(
+            'Input Data Sepeda',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {
+              getImage();
+            },
+            child: Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.black,
+                      width: 1.0,
+                      style: BorderStyle.solid)),
+              child: imageFile != null ? Image.file(imageFile!) : Placeholder(),
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Harap masukan gambar',
+          ),
           getMyField(
               hinText: 'Nomor Sepeda',
               textInputType: TextInputType.number,
@@ -59,21 +135,29 @@ class UpdateSepeda extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                  onPressed: () {
-                    //update data sepeda
-                    Sepeda updatedSepeda = Sepeda(
-                        id: sepeda.id,
-                        name: nameController.text,
-                        nomor: int.parse(nomorController.text));
+                  onPressed: () async {
+                    final imageUrl = await uploadImageToFirebase();
+                    if (imageUrl.isNotEmpty) {
+                      print('URL Gambar: $imageUrl');
+                      //update data sepeda
 
-                    final CollectionReference =
-                        FirebaseFirestore.instance.collection('sepedas');
-                    CollectionReference.doc(updatedSepeda.id)
-                        .update(updatedSepeda.toJson())
-                        .whenComplete(() {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => BikeHome()));
-                    });
+                      Sepeda updatedSepeda = Sepeda(
+                          id: widget.sepeda.id,
+                          name: nameController.text,
+                          nomor: int.parse(nomorController.text),
+                          imageUrl: imageUrl);
+
+                      final CollectionReference =
+                          FirebaseFirestore.instance.collection('sepedas');
+                      CollectionReference.doc(updatedSepeda.id)
+                          .update(updatedSepeda.toJson())
+                          .whenComplete(() {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BikeHome()));
+                      });
+                    }
                   },
                   child: const Text('Update')),
               ElevatedButton(
@@ -105,7 +189,7 @@ Widget getMyField(
         decoration: InputDecoration(
             hintText: 'Masukkan Data $hinText',
             labelText: hinText,
-            border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5))))),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)))),
   );
 }
