@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rentbike/model/sepeda_model.dart';
 import 'package:rentbike/view/sepeda/bikehome.dart';
@@ -122,6 +123,7 @@ class _AddSepedaState extends State<AddSepeda> {
               hinText: 'Nomor Sepeda',
               textInputType: TextInputType.number,
               controller: nomorController),
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -145,31 +147,46 @@ class _AddSepedaState extends State<AddSepeda> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.lightBlue, // Warna latar belakang tombol
                   padding: EdgeInsets.symmetric(
-                      horizontal: 32, vertical: 16), // Padding tombol
+                      horizontal: 50, vertical: 16), // Padding tombol
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         10), // Mengubah border tombol menjadi rounded
                   ),
                 ),
-                child: const Text('Simpan'),
+                child: Text(
+                  'Simpan',
+                  style: TextStyle(
+                    fontSize: 16, // Ukuran teks
+                    fontWeight: FontWeight.bold, // Ketebalan teks
+                    color: Colors.white, // Warna teks
+                  ),
+                ),
               ),
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BikeHome()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.amber, // Warna latar belakang tombol
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 16), // Padding tombol
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          10), // Mengubah border tombol menjadi rounded
-                    ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BikeHome()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.amber, // Warna latar belakang tombol
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 50, vertical: 16), // Padding tombol
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        10), // Mengubah border tombol menjadi rounded
                   ),
-                  child: const Text('Batal')),
+                ),
+                child: Text(
+                  'Batal',
+                  style: TextStyle(
+                    fontSize: 16, // Ukuran teks
+                    fontWeight: FontWeight.bold, // Ketebalan teks
+                    color: Colors.white, // Warna teks
+                  ),
+                ),
+              ),
             ],
           )
         ],

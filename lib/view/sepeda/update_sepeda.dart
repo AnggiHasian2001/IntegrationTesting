@@ -131,43 +131,78 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
               hinText: 'Nama Sepeda',
               textInputType: TextInputType.name,
               controller: nameController),
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                  onPressed: () async {
-                    final imageUrl = await uploadImageToFirebase();
-                    if (imageUrl.isNotEmpty) {
-                      print('URL Gambar: $imageUrl');
-                      //update data sepeda
+                onPressed: () async {
+                  final imageUrl = await uploadImageToFirebase();
+                  if (imageUrl.isNotEmpty) {
+                    print('URL Gambar: $imageUrl');
+                    //update data sepeda
 
-                      Sepeda updatedSepeda = Sepeda(
-                          id: widget.sepeda.id,
-                          name: nameController.text,
-                          nomor: int.parse(nomorController.text),
-                          imageUrl: imageUrl);
+                    Sepeda updatedSepeda = Sepeda(
+                        id: widget.sepeda.id,
+                        name: nameController.text,
+                        nomor: int.parse(nomorController.text),
+                        imageUrl: imageUrl);
 
-                      final CollectionReference =
-                          FirebaseFirestore.instance.collection('sepedas');
-                      CollectionReference.doc(updatedSepeda.id)
-                          .update(updatedSepeda.toJson())
-                          .whenComplete(() {
+                    final CollectionReference =
+                        FirebaseFirestore.instance.collection('sepedas');
+                    CollectionReference.doc(updatedSepeda.id)
+                        .update(updatedSepeda.toJson())
+                        .whenComplete(
+                      () {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => BikeHome()));
-                      });
-                    }
-                  },
-                  child: const Text('Update')),
+                      },
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightBlue, // Warna latar belakang tombol
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 50, vertical: 16), // Padding tombol
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        10), // Mengubah border tombol menjadi rounded
+                  ),
+                ),
+                child: Text(
+                  'Simpan',
+                  style: TextStyle(
+                    fontSize: 16, // Ukuran teks
+                    fontWeight: FontWeight.bold, // Ketebalan teks
+                    color: Colors.white, // Warna teks
+                  ),
+                ),
+              ),
               ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.amber),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BikeHome()));
-                  },
-                  child: const Text('Batal')),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BikeHome()));
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.amber, // Warna latar belakang tombol
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 50, vertical: 16), // Padding tombol
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        10), // Mengubah border tombol menjadi rounded
+                  ),
+                ),
+                child: Text(
+                  'Batal',
+                  style: TextStyle(
+                    fontSize: 16, // Ukuran teks
+                    fontWeight: FontWeight.bold, // Ketebalan teks
+                    color: Colors.white, // Warna teks
+                  ),
+                ),
+              ),
             ],
           )
         ],
