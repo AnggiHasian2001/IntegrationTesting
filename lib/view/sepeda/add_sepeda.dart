@@ -20,7 +20,8 @@ class _AddSepedaState extends State<AddSepeda> {
 
   //start untuk input gambar
   File? imageFile;
-  Future<void> getImage() async {
+
+  Future getImage() async {
     final picker = ImagePicker();
     final PickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -31,7 +32,8 @@ class _AddSepedaState extends State<AddSepeda> {
     }
   }
 
-  Future<void> uploadImageToFirebase() async {
+  Future<String> uploadImageToFirebase() async {
+    String imageUrl;
     if (imageFile != null) {
       try {
         firebase_storage.Reference ref = firebase_storage
@@ -39,19 +41,27 @@ class _AddSepedaState extends State<AddSepeda> {
             .ref()
             .child('images/${DateTime.now().millisecondsSinceEpoch}');
         await ref.putFile(imageFile!);
-        String imageUrl = await ref.getDownloadURL();
-
+        imageUrl = await ref.getDownloadURL();
+        return imageUrl;
         // Gunakan URL gambar untuk keperluan selanjutnya, seperti menyimpan ke database
-
-        print('Image uploaded successfully. URL: $imageUrl');
       } catch (e) {
         print('Error uploading image to Firebase Storage: $e');
       }
     } else {
       print('No image selected.');
     }
+    return '';
   }
-  //end untuk input gambar
+
+  Future uploadImage() async {
+    String url;
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('images/${DateTime.now().millisecondsSinceEpoch}');
+    await ref.putFile(imageFile!);
+    url = await ref.getDownloadURL();
+    return url;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +91,6 @@ class _AddSepedaState extends State<AddSepeda> {
           child: Column(
         children: [
           const SizedBox(height: 20),
-          getMyField(hinText: 'Nama Sepeda', controller: nameController),
-          getMyField(
-              hinText: 'Nomor Sepeda',
-              textInputType: TextInputType.number,
-              controller: nomorController),
           //masuk ke galeri
           GestureDetector(
             onTap: () {
@@ -102,28 +107,34 @@ class _AddSepedaState extends State<AddSepeda> {
               child: imageFile != null ? Image.file(imageFile!) : Placeholder(),
             ),
           ),
-          //button upload image
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
-            onPressed: () {
-              uploadImageToFirebase();
-            },
-            child: Text('Upload Image'),
-          ),
+          const SizedBox(height: 20),
+          getMyField(hinText: 'Nama Sepeda', controller: nameController),
+          getMyField(
+              hinText: 'Nomor Sepeda',
+              textInputType: TextInputType.number,
+              controller: nomorController),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                  onPressed: () {
+                onPressed: () async {
+                  final imageUrl = await uploadImageToFirebase();
+                  if (imageUrl.isNotEmpty) {
+                    // Lakukan sesuatu dengan URL gambar yang telah diunggah
+                    print('URL Gambar: $imageUrl');
+
                     Sepeda sepeda = Sepeda(
-                        name: nameController.text,
-                        nomor: int.parse(nomorController.text),
-                        imageUrl: imageController.text);
-                    //menambahkan data sepeda
+                      name: nameController.text,
+                      nomor: int.parse(nomorController.text),
+                      imageUrl: imageUrl,
+                    );
+
+                    // Menambahkan data sepeda
                     addSepedaNavigateToHome(sepeda, context);
-                  },
-                  child: const Text('Simpan')),
+                  }
+                },
+                child: const Text('Simpan'),
+              ),
               ElevatedButton(
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.amber),
@@ -137,6 +148,23 @@ class _AddSepedaState extends State<AddSepeda> {
         ],
       )),
     );
+  }
+
+  void addSepedaNavigateToHome(Sepeda sepeda, BuildContext context) {
+    //mengacu ke firebase collection sepedas
+    final sepedaRef = FirebaseFirestore.instance.collection('sepedas').doc();
+    sepeda.id = sepedaRef.id;
+    final data = sepeda.toJson();
+    final imgurl = uploadImage();
+    //menambahkan data sepeda, jika selesai langsung ke bikeHome
+    sepedaRef.set(data).whenComplete(() {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BikeHome(),
+        ),
+      );
+    });
   }
 }
 
@@ -157,20 +185,4 @@ Widget getMyField(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)))),
   );
-}
-
-void addSepedaNavigateToHome(Sepeda sepeda, BuildContext context) {
-  //mengacu ke firebase collection sepedas
-  final sepedaRef = FirebaseFirestore.instance.collection('sepedas').doc();
-  sepeda.id = sepedaRef.id;
-  final data = sepeda.toJson();
-  //menambahkan data sepeda, jika selesai langsung ke bikeHome
-  sepedaRef.set(data).whenComplete(() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => BikeHome(),
-      ),
-    );
-  });
 }
