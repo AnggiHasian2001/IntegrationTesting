@@ -91,6 +91,11 @@ class _AddSepedaState extends State<AddSepeda> {
           child: Column(
         children: [
           const SizedBox(height: 20),
+          const Text(
+            'Input Data Sepeda',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
           //masuk ke galeri
           GestureDetector(
             onTap: () {
@@ -106,6 +111,10 @@ class _AddSepedaState extends State<AddSepeda> {
                       style: BorderStyle.solid)),
               child: imageFile != null ? Image.file(imageFile!) : Placeholder(),
             ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Harap masukan gambar',
           ),
           const SizedBox(height: 20),
           getMyField(hinText: 'Nama Sepeda', controller: nameController),
@@ -133,15 +142,33 @@ class _AddSepedaState extends State<AddSepeda> {
                     addSepedaNavigateToHome(sepeda, context);
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightBlue, // Warna latar belakang tombol
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 32, vertical: 16), // Padding tombol
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        10), // Mengubah border tombol menjadi rounded
+                  ),
+                ),
                 child: const Text('Simpan'),
               ),
               ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.amber),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BikeHome()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BikeHome()),
+                    );
                   },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.amber, // Warna latar belakang tombol
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 16), // Padding tombol
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10), // Mengubah border tombol menjadi rounded
+                    ),
+                  ),
                   child: const Text('Batal')),
             ],
           )
