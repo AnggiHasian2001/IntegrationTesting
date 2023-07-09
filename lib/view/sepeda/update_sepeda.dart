@@ -21,7 +21,6 @@ class UpdateSepeda extends StatefulWidget {
 class _UpdateSepedaState extends State<UpdateSepeda> {
   //variabel
   final TextEditingController nomorController = TextEditingController();
-
   final TextEditingController nameController = TextEditingController();
 
   //start untuk input gambar
@@ -39,7 +38,7 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
   }
 
   Future<String> uploadImageToFirebase() async {
-    String imageUrl;
+    String imageUrl = '';
     if (imageFile != null) {
       try {
         firebase_storage.Reference ref = firebase_storage
@@ -48,14 +47,13 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
             .child('images/${DateTime.now().millisecondsSinceEpoch}');
         await ref.putFile(imageFile!);
         imageUrl = await ref.getDownloadURL();
-        return imageUrl;
       } catch (e) {
         print('Error uploading image to Firebase Storage: $e');
       }
     } else {
       print('No image selected.');
     }
-    return '';
+    return imageUrl;
   }
 
   Future uploadImage() async {
@@ -68,10 +66,36 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
     return url;
   }
 
+  Future<void> updateData() async {
+    final imageUrl = await uploadImageToFirebase();
+    if (imageUrl.isNotEmpty) {
+      //update data sepeda
+      Sepeda updatedSepeda = Sepeda(
+          id: widget.sepeda.id,
+          name: nameController.text,
+          nomor: int.parse(nomorController.text),
+          imageUrl: imageUrl);
+
+      final CollectionReference =
+          FirebaseFirestore.instance.collection('sepedas');
+      CollectionReference.doc(updatedSepeda.id)
+          .update(updatedSepeda.toJson())
+          .whenComplete(() {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => BikeHome()));
+      });
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     nomorController.text = '${widget.sepeda.nomor}';
     nameController.text = widget.sepeda.name;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -111,11 +135,12 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
               height: 200,
               width: 200,
               decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Colors.black,
-                      width: 1.0,
-                      style: BorderStyle.solid)),
-              child: imageFile != null ? Image.file(imageFile!) : Placeholder(),
+                border: Border.all(
+                    color: Colors.black, width: 1.0, style: BorderStyle.solid),
+              ),
+              child: imageFile != null
+                  ? Image.file(imageFile!)
+                  : const Placeholder(),
             ),
           ),
           const SizedBox(height: 20),
@@ -130,47 +155,22 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
               hinText: 'Nama Sepeda',
               textInputType: TextInputType.name,
               controller: nameController),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () async {
-                  final imageUrl = await uploadImageToFirebase();
-                  if (imageUrl.isNotEmpty) {
-                    print('URL Gambar: $imageUrl');
-                    //update data sepeda
-
-                    Sepeda updatedSepeda = Sepeda(
-                        id: widget.sepeda.id,
-                        name: nameController.text,
-                        nomor: int.parse(nomorController.text),
-                        imageUrl: imageUrl);
-
-                    final CollectionReference =
-                        FirebaseFirestore.instance.collection('sepedas');
-                    CollectionReference.doc(updatedSepeda.id)
-                        .update(updatedSepeda.toJson())
-                        .whenComplete(
-                      () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BikeHome()));
-                      },
-                    );
-                  }
-                },
+                onPressed: updateData,
                 style: ElevatedButton.styleFrom(
                   primary: Colors.lightBlue, // Warna latar belakang tombol
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                       horizontal: 50, vertical: 16), // Padding tombol
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         10), // Mengubah border tombol menjadi rounded
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Simpan',
                   style: TextStyle(
                     fontSize: 16, // Ukuran teks
@@ -186,14 +186,14 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.amber, // Warna latar belakang tombol
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                       horizontal: 50, vertical: 16), // Padding tombol
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         10), // Mengubah border tombol menjadi rounded
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Batal',
                   style: TextStyle(
                     fontSize: 16, // Ukuran teks
