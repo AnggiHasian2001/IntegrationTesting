@@ -12,6 +12,7 @@ class Register extends StatelessWidget {
 
   String? name;
   String? email;
+  String? jeniskelamin;
   String? password;
 
   @override
@@ -85,6 +86,26 @@ class Register extends StatelessWidget {
                 ),
                 TextFormField(
                   validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Harap masukan jenis kelamin';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Jenis Kelamin",
+                    labelText: "Jenis Kelamin",
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
+                  ),
+                  onChanged: (value) {
+                    jeniskelamin = value;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (value) {
                     if (value == null || value.length < 6) {
                       return 'Password butuh setidaknya panjang 6 data';
                     }
@@ -108,7 +129,7 @@ class Register extends StatelessWidget {
                     if (formkey.currentState!.validate()) {
                       UserModel? registeredUser =
                           await autCtr.registerWithEmailAndPassword(
-                              email!, password!, name!);
+                              email!, jeniskelamin!, password!, name!);
 
                       if (registeredUser != null) {
                         // Registration successful
