@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'RentBike',
         theme: ThemeData(),
-        home: HomePage(),
+        home: Login(),
       ),
     );
   }

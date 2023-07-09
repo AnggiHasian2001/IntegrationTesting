@@ -68,10 +68,11 @@ class CardListWidget extends ConsumerWidget {
                             fontSize: 17),
                       ),
 
-                      //text deksripsi
+                      //text data peminjam
                       subtitle: Text(
                         //menerima data dan dekorasi coret data
                         rentData[getIndex].description,
+                        //panjangnya kalimat
                         maxLines: 3,
                         style: TextStyle(
                             decoration: rentData[getIndex].isDone
@@ -80,11 +81,11 @@ class CardListWidget extends ConsumerWidget {
                             fontWeight: FontWeight.w500),
                       ),
 
-                      //button check
+                      //button centang
                       trailing: Transform.scale(
                         scale: 1.5,
                         child: Checkbox(
-                          activeColor: Colors.blue.shade800,
+                          activeColor: Colors.amber,
                           shape: const CircleBorder(),
                           value: rentData[getIndex].isDone,
                           onChanged: (value) => ref
@@ -93,8 +94,9 @@ class CardListWidget extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    //bagian bawah dari card
                     Transform.translate(
-                      offset: const Offset(0, 20),
+                      offset: const Offset(0, 10),
                       child: Container(
                         child: Column(
                           children: [

@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:gap/gap.dart';
 import 'package:rentbike/model/sepeda_model.dart';
+import 'package:rentbike/view/homepage.dart';
 import 'package:rentbike/view/sepeda/add_sepeda.dart';
 import 'package:rentbike/view/sepeda/update_sepeda.dart';
 
@@ -35,6 +36,20 @@ class BikeHome extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                },
+                icon: const Icon(CupertinoIcons.home),
+              ),
+            ]),
+          )
+        ],
       ),
       body: FutureBuilder<QuerySnapshot>(
         future: _reference.get(),
@@ -101,12 +116,12 @@ class BikeHome extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                      fontSize: 19),
                 ),
 
                 //tampil nomor sepeda
                 subtitle: Text(
-                  'Nomor : ${sepedas[index].nomor}',
+                  'Nomor Sepeda : ${sepedas[index].nomor}',
                   style: TextStyle(
                       color: Colors.lightBlue,
                       fontWeight: FontWeight.w400,

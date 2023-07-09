@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:rentbike/common/show_model.dart';
+import 'package:rentbike/view/add_rent.dart';
 import 'package:rentbike/controller/auth_controller.dart';
 import 'package:rentbike/provider/service_provider.dart';
 import 'package:rentbike/view/login.dart';
@@ -20,6 +20,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //mengambil data dari firebase dari service_provider
     final rentData = ref.watch(fetchDataProvider);
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
@@ -87,13 +88,14 @@ class HomePage extends ConsumerWidget {
                   ),
                   Gap(7),
                   Text(
-                    'Selasa, 27 Juni 2023',
+                    '- Kami Ada Untuk Mahasiswa -',
                     style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                 ],
               ),
               //Button tambah data
               ElevatedButton(
+                //buat style button
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFD5E8FA),
                     foregroundColor: Colors.blue.shade800,
@@ -117,7 +119,7 @@ class HomePage extends ConsumerWidget {
           //List View Data
           const Gap(20),
           ListView.builder(
-            //menghitung banyaknya data yg akan ditampilkan
+            //menghitung banyaknya data yg akan ditampilkan diambil dari firebase
             itemCount: rentData.value?.length ?? 0,
             shrinkWrap: true,
             //mengambil card dari widget CardListWidget
