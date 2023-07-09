@@ -108,8 +108,8 @@ class BikeHome extends StatelessWidget {
                 subtitle: Text(
                   'Nomor : ${sepedas[index].nomor}',
                   style: TextStyle(
-                      color: Colors.amber,
-                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                      fontWeight: FontWeight.w400,
                       fontSize: 16),
                 ),
                 //lingkarang foto

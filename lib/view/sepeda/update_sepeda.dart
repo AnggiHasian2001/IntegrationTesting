@@ -49,7 +49,6 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
         await ref.putFile(imageFile!);
         imageUrl = await ref.getDownloadURL();
         return imageUrl;
-        // Gunakan URL gambar untuk keperluan selanjutnya, seperti menyimpan ke database
       } catch (e) {
         print('Error uploading image to Firebase Storage: $e');
       }

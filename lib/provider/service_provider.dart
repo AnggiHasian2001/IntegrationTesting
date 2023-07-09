@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rentbike/model/rent_model.dart';
-import 'package:rentbike/services/rent_service.dart';
+import 'package:rentbike/controller/rent_service.dart';
 
 final serviceProvider = StateProvider<RentService>((ref) {
   return RentService();
