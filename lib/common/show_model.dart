@@ -61,11 +61,11 @@ class AddNewRentModel extends ConsumerWidget {
             txtController: nameController,
           ),
           const Gap(12),
-          const Text('Deskripsi', style: AppStyle.headingOne),
+          const Text('Data Peminjaman', style: AppStyle.headingOne),
           const Gap(6),
           TextFieldWidget(
             maxLine: 5,
-            hintText: 'Masukkan Deskripsi',
+            hintText: 'Masukkan Data',
             txtController: descriptionController,
           ),
           const Gap(12),
@@ -167,7 +167,7 @@ class AddNewRentModel extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: const Text('Batal'),
                 ),
               ),
               const Gap(20),
@@ -215,7 +215,7 @@ class AddNewRentModel extends ConsumerWidget {
                     ref.read(radioProvider.notifier).update((state) => 0);
                     Navigator.pop(context);
                   },
-                  child: const Text('Save'),
+                  child: const Text('Simpan'),
                 ),
               ),
             ],

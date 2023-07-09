@@ -123,7 +123,7 @@ class BikeHome extends StatelessWidget {
                     child: Row(
                       children: [
                         InkWell(
-                          child: const Icon(Icons.edit_outlined),
+                          child: const Icon(CupertinoIcons.pencil),
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -134,7 +134,7 @@ class BikeHome extends StatelessWidget {
                         ),
                         InkWell(
                           child: const Icon(
-                            Icons.delete,
+                            CupertinoIcons.delete,
                             color: Colors.red,
                           ),
                           onTap: () {

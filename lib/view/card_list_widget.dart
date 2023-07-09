@@ -19,42 +19,25 @@ class CardListWidget extends ConsumerWidget {
     final rentData = ref.watch(fetchDataProvider);
     return rentData.when(
       data: (rentData) {
-        Color categoryColor = Colors.white;
-
-        final getCategory = rentData[getIndex].category;
-        //set warna untuk tiap kategori
-        switch (getCategory) {
-          case 'Pinjam':
-            categoryColor = Colors.green;
-            break;
-
-          case 'Keliling':
-            categoryColor = Colors.blue.shade700;
-            break;
-
-          case 'Foto':
-            categoryColor = Colors.amber.shade700;
-            break;
-        }
+        Colors.white;
         return Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
           width: double.infinity,
-          height: 135,
+          height: 140,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 //memanggil warna dari categoryColor
-                color: categoryColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
                 ),
               ),
-              width: 20,
+              width: 5,
             ),
             Expanded(
                 child: Padding(
@@ -66,11 +49,12 @@ class CardListWidget extends ConsumerWidget {
                       contentPadding: EdgeInsets.zero,
                       //fungsi delete
                       leading: IconButton(
-                        icon: Icon(CupertinoIcons.delete),
+                        icon: const Icon(CupertinoIcons.delete),
                         onPressed: () => ref
                             .read(serviceProvider)
                             .deleteRent(rentData[getIndex].docID),
                       ),
+
                       //text nama penyewa
                       title: Text(
                         //menerima data dan dekorasi coret data
@@ -118,30 +102,50 @@ class CardListWidget extends ConsumerWidget {
                               thickness: 1.2,
                               color: Colors.grey.shade200,
                             ),
-                            Gap(5),
+                            const Gap(5),
                             Row(
                               children: [
-                                const Text('Today :'),
-                                const Gap(12),
+                                const Text(
+                                  'Today :',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                const Gap(5),
                                 Text(rentData[getIndex].timeRent,
                                     style: TextStyle(
                                         decoration: rentData[getIndex].isDone
                                             ? TextDecoration.lineThrough
                                             : null,
-                                        fontWeight: FontWeight.w800,
+                                        fontWeight: FontWeight.normal,
                                         fontSize: 14,
                                         color: Colors.amber)),
-                                const Gap(20),
-                                const Text('Kategori :'),
-                                const Gap(12),
+                                const Gap(10),
+                                const Text(
+                                  'Kategori :',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                const Gap(5),
                                 Text(rentData[getIndex].category,
                                     style: TextStyle(
                                         decoration: rentData[getIndex].isDone
                                             ? TextDecoration.lineThrough
                                             : null,
-                                        fontWeight: FontWeight.w800,
+                                        fontWeight: FontWeight.normal,
                                         fontSize: 14,
                                         color: Colors.green)),
+                                const Gap(10),
+                                const Text(
+                                  'Date :',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                const Gap(5),
+                                Text(rentData[getIndex].dateRent,
+                                    style: TextStyle(
+                                        decoration: rentData[getIndex].isDone
+                                            ? TextDecoration.lineThrough
+                                            : null,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14,
+                                        color: Colors.lightBlue)),
                               ],
                             )
                           ],
