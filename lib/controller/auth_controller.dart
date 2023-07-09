@@ -22,10 +22,10 @@ class AuthController {
             await userCollection.doc(user.uid).get();
 
         final UserModel currentUser = UserModel(
-          uId: user.uid,
-          email: user.email ?? '',
-          name: snapshot['name'] ?? '',
-        );
+            uId: user.uid,
+            email: user.email ?? '',
+            name: snapshot['name'] ?? '',
+            jeniskelamin: snapshot['jeniskelamin'] ?? '');
         return currentUser;
       }
     } catch (e) {
@@ -36,15 +36,19 @@ class AuthController {
 
   //register
   Future<UserModel?> registerWithEmailAndPassword(
-      String email, String password, String name) async {
+      String email, String password, String name, String jeniskelamin) async {
     try {
       final UserCredential userCredential = await auth
           .createUserWithEmailAndPassword(email: email, password: password);
       final User? user = userCredential.user;
 
       if (user != null) {
-        final UserModel newUser =
-            UserModel(uId: user.uid, email: user.email ?? '', name: name);
+        final UserModel newUser = UserModel(
+          uId: user.uid,
+          email: user.email ?? '',
+          name: name,
+          jeniskelamin: jeniskelamin,
+        );
 
         //create a document in the users collection with the user's
         await userCollection.doc(newUser.uId).set(newUser.toMap());

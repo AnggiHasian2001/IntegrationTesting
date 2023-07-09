@@ -22,6 +22,7 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
   //variabel
   final TextEditingController nomorController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController imgController = TextEditingController();
 
   //start untuk input gambar
   File? imageFile;
@@ -87,6 +88,7 @@ class _UpdateSepedaState extends State<UpdateSepeda> {
     }
   }
 
+//buat nerima data
   @override
   void initState() {
     super.initState();
