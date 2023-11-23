@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "460056647131",
+    "project_id": "rentbike-7056e",
+    "storage_bucket": "rentbike-7056e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460056647131:android:3b6f644185f4766db343fe",
+        "android_client_info": {
+          "package_name": "com.example.rentbike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460056647131-90ml086k3aoo3jmmmdjemln58jlpaa4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbfiEFZ94AOpmCZ9lL7dgL20ZEXPvVJ2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460056647131-90ml086k3aoo3jmmmdjemln58jlpaa4l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "460056647131-cnv8idusuf4rv9krb6abkr5nfmpir6ii.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rentbike"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
